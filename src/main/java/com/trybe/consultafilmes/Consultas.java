@@ -2,12 +2,12 @@ package com.trybe.consultafilmes;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.emptyMap;
-import static java.util.Collections.emptySet;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Consultas {
 
@@ -26,7 +26,11 @@ public class Consultas {
    * conjunto associado a esta mesma chave.</p>
    */
   public Set<String> atoresQueInterpretaramSiProprios() {
-    return emptySet(); // TODO: Implementar.
+    return this.filmes.stream()
+            .flatMap(e -> e.atoresPorPersonagem.entrySet().stream())
+            .filter(e -> e.getValue().contains(e.getKey()))
+            .map(Map.Entry::getKey)
+            .collect(Collectors.toSet());
   }
 
   /**
